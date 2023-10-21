@@ -9,8 +9,8 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import TemplateView
 
-from . forms import LoginForm, GenerateCertificateForm
-from . models import Certificate
+from . forms import LoginForm, GenerateCertificateForm, AuthFillForm
+from . models import Certificate, Department
 
 # Create your views here.
 def _serial_no():
@@ -35,8 +35,6 @@ def generate_serial_no():
         if not Certificate.objects.filter(serial_number=appl).exists():
             exists = False
     return appl
-
-
 
 class HomePageView(TemplateView):
     template_name = "index.html"
@@ -67,9 +65,18 @@ class LoginView(View):
         
         return render(request, self.template_name, {'form':form})
 
+class LogoutView(View):
+    def post(self, request):
+        logout(request)
+        messages.success(
+            request, 'You have successfully logged out, login again to continue')
+        return redirect('auth:login')
+
 class DashboardView(View):
     def get(self, request):
-        return render(request, "auth/dashboard.html")
+        generated_cert = Certificate.objects.count()
+        departments = Department.objects.count()
+        return render(request, "auth/dashboard.html", {'certs':generated_cert, 'depts': departments})
     
 class GenerateCertificateView(View):
     def get(self, request):
@@ -81,10 +88,9 @@ class GenerateCertificateView(View):
         if form.is_valid():
             instance = form.save()
 
-            # form.save()
             certificate = Certificate.objects.create(
                 serial_number = generate_serial_no(),
-                holder = instance
+                holder = instance,
             )
             messages.success(request, "Certificate Successfully Generated")
 
@@ -94,23 +100,9 @@ class GenerateCertificateView(View):
             qr_image_pil.save(stream, format='PNG')
             qr_image_data = stream.getvalue()
             qr_image_base64 = base64.b64encode(qr_image_data).decode('utf-8')
-            
-            # qr = qrcode.QRCode(
-            #     version=1,
-            #     error_correction=qrcode.constants.ERROR_CORRECT_L,
-            #     box_size=10,
-            #     border=4,
-            # )
-            # qr.add_data(certificate.serial_number)  # Adjust this URL based on your certificate viewing URL
-            # qr.make(fit=True)
 
-            # img = qr.make_image(fill_color="black", back_color="white")
-
-            # # Create a BytesIO object to store the image
-            # qr_image = BytesIO()
-            # img.save(qr_image, "PNG")
-            # qr_image.seek(0)
-
+            certificate.qr_code = qr_image_base64
+            certificate.save()
 
             certificate_data = {
                 'first_name' : certificate.holder.first_name,
@@ -127,7 +119,13 @@ class GenerateCertificateView(View):
 
 class AuthenticateCertificateView(View):
     def get(self, request):
-        return render(request, "cert/authenticate_certificate.html")
+        form = AuthFillForm()
+        return render(request, "cert/authenticate_certificate.html", {'form':form})
+    
+    def post(self, request):
+        form = AuthFillForm(request.POST)
+        if form.is_valid():
+            return render(request, "")
     
 class ScannerView(TemplateView):
     template_name = 'cert/scanner.html'

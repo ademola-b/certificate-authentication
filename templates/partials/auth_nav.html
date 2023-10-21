@@ -22,7 +22,7 @@
           </a>
           <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
             <div class="p-3 text-center bg-primary">
-              <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ request.user.pics.url }}" alt="">
+              <img class="img-avatar img-avatar48 img-avatar-thumb" src="{% static 'auth/assets/images/default.jpg' %}" alt="">
             </div>
             <div class="p-2">
               <h5 class="dropdown-header text-uppercase pl-2 text-dark text-center">{{request.user.name}}</h5>

@@ -48,9 +48,12 @@
                                         with: <strong>{{ cert.holder.grade }}</strong>
                                     </div>
 
-                                    <img src="data:image/png;base64,{{ qr_code|safe }}" alt="QR Code">
+                                    <img src="data:image/png;base64,{{ cert.qr_code |safe }}" alt="QR Code">
                                 </div>
                             </div>
+
+                            <a href="" class="btn btn-primary">SAVE</a>
+
                         {% else %}
                             <h2 class="text-danger text-center font-weight-bold mb-2"> Record Not Found </h2> 
                         {% endif %}

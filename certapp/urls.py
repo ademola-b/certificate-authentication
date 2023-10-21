@@ -1,12 +1,13 @@
 from django.urls import path
-from . views import (HomePageView, LoginView, DashboardView, 
+from . views import (HomePageView, LoginView, LogoutView,
+                     DashboardView, 
                      GenerateCertificateView, AuthenticateCertificateView, 
                      ScannerView, ScannedResultView)
 app_name = 'auth'
 urlpatterns = [
     path('', HomePageView.as_view(), name="homepage"),
     path('auth/login/', LoginView.as_view(), name='login'),
-    path('auth/login/', LoginView.as_view(), name='logout'),
+    path('auth/logout/', LogoutView.as_view(), name='logout'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
     path('generate-certificate/', GenerateCertificateView.as_view(), name='generate_certificate'),
     path('authenticate-certificate/', AuthenticateCertificateView.as_view(), name='authenticate_certificate'),

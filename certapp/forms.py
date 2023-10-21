@@ -54,3 +54,11 @@ class GenerateCertificateForm(forms.ModelForm):
     class Meta:
         model = Holder
         fields = "__all__"
+
+class AuthFillForm(forms.Form):
+    matric_no = forms.CharField(help_text='matriculation number', widget=forms.TextInput(
+        attrs={
+            'class': 'form-control form-control-lg input-lg',
+            'placeholder': 'Enter matriculation number'
+        }
+    ))

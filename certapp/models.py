@@ -19,12 +19,11 @@ class Course(models.Model):
 
 class Holder(models.Model):
     holder_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
-    matric_no = models.CharField(max_length=50)
+    matric_no = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=100, unique=True, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
-    # course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
     grade = models.CharField(max_length=50)
 
     def __str__(self):
@@ -34,6 +33,7 @@ class Certificate(models.Model):
     cert_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     serial_number = models.CharField(max_length=20, unique=True)
     holder = models.OneToOneField(Holder, on_delete=models.CASCADE)
+    qr_code = models.TextField()
     
     def __str__(self):
         return f"{self.holder.first_name} - {self.serial_number}"
