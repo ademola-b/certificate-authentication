@@ -125,7 +125,14 @@ class AuthenticateCertificateView(View):
     def post(self, request):
         form = AuthFillForm(request.POST)
         if form.is_valid():
-            return render(request, "")
+            matric_no = request.POST.get('matric_no')
+            try:
+                cert = Certificate.objects.get(holder__matric_no = matric_no)
+                return render(request, "cert/cert_with_matric.html", {'cert':cert})
+            except:
+                messages.warning(request, "NO Certificate with the provided matriculation number")
+                return render(request, "cert/authenticate_certificate.html", {'form':form})
+
     
 class ScannerView(TemplateView):
     template_name = 'cert/scanner.html'

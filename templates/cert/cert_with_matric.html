@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load qr_code %}
+{% load static %}
+{% block title %}Certificate{% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'auth/assets/css/certificate.css' %}">
+    {% include 'partials/auth_head.html' %}
+{% endblock head %}
+
+{% block body %}
+
+<div class="container-scroller">
+
+  {% block nav %}{% include 'partials/auth_nav.html' %}{% endblock nav %}
+
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    {% include 'partials/auth_sidebar.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          {% include 'partials/messages.html' %}
+
+          <div class="d-xl-flex justify-content-between align-items-start">
+            <h2 class="text-dark font-weight-bold mb-2"> {{last_name | title }} Certificate </h2>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                      <div class="card-body">
+                        <div class="certificate">
+                            <div class="certificate-content">
+                                <div class="certificate-title">Certificate of Achievement</div>
+                                <div class="certificate-details">
+                                    This is to certify that
+                                    <br>
+                                    <strong>{{ cert.holder.first_name | title }} {{ cert.holder.last_name | title }} </strong>
+                                    <br>
+                                    has successfully completed the course on
+                                    <br>
+                                    <strong>{{ cert.holder.department.name }}</strong>
+                                    <br>
+                                    with: <strong>{{ cert.holder.grade }}</strong>
+                                </div>
+
+                                <img src="data:image/png;base64,{{ cert.qr_code|safe }}" alt="QR Code">
+                            </div>
+                        </div>
+
+                     
+                      </div>
+                </div>
+        
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        {% block footer %}{% include 'partials/auth_footer.html' %}{% endblock footer %}
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+
+  {% block script %} {% include 'partials/auth_script.html' %} {% endblock %}
+  {% include "partials/modal_logout.html" %}
+
+{% endblock %}

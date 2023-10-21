@@ -14,7 +14,7 @@
         <li class="nav-item nav-profile dropdown">
           <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
             <div class="nav-profile-img">
-              <img src="{{ request.user.pics.url }}" alt="image">
+              <img src="{% static 'auth/assets/images/default.jpg' %}" alt="image">
             </div>
             <div class="nav-profile-text">
               <p class="mb-1 text-black">{{request.user.name}}</p>
