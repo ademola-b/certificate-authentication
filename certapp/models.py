@@ -24,7 +24,7 @@ class Holder(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=100, unique=True, null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
-    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    # course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
     grade = models.CharField(max_length=50)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class Holder(models.Model):
 class Certificate(models.Model):
     cert_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     serial_number = models.CharField(max_length=20, unique=True)
-    holder = models.ForeignKey(Holder, on_delete=models.CASCADE)
+    holder = models.OneToOneField(Holder, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"{self.holder.first_name} - {self.serial_number}"

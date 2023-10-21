@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Generate Certificate{% endblock title %}
+
+{% block head %}{% include 'partials/auth_head.html' %}{% endblock head %}
+
+{% block body %}
+
+<div class="container-scroller">
+
+  {% block nav %}{% include 'partials/auth_nav.html' %}{% endblock nav %}
+
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    {% include 'partials/auth_sidebar.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          {% include 'partials/messages.html' %}
+
+          <div class="d-xl-flex justify-content-between align-items-start">
+            <h2 class="text-dark font-weight-bold mb-2"> Generate Certificate </h2>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                      <div class="card-body">
+                        <h4 class="mb-4 text-dark font-weight-bold">Kindly, fill below form</h4>
+                        <form class="pt-3" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="matric_no">Matriculation No: </label>
+                                {{form.matric_no}}
+                            </div>
+                            <div class="form-group">
+                                <label for="first_name">First Name: </label>
+                                {{form.first_name}}
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Last Name: </label>
+                                {{form.last_name}}
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address: </label>
+                                {{form.email}}
+                            </div>
+                            <div class="form-group">
+                                <label for="department">Department: </label>
+                                {{form.department}}
+                            </div>
+                            <div class="form-group">
+                                <label for="course">Grade: </label>
+                                {{form.grade}}
+                            </div>
+                            
+                            <div class="mt-3">
+                              <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Submit</nutton>
+                            </div>
+                            <div class="my-2 d-flex justify-content-between align-items-center">
+        
+                              {% comment %} <a href="#" class="auth-link text-black">Forgot password?</a> {% endcomment %}
+                            </div>
+                        </form>
+                      </div>
+                </div>
+        
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        {% block footer %}{% include 'partials/auth_footer.html' %}{% endblock footer %}
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+
+  {% block script %} {% include 'partials/auth_script.html' %} {% endblock %}
+  {% include "partials/modal_logout.html" %}
+
+{% endblock %}
