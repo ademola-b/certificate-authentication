@@ -40,6 +40,18 @@ class GenerateCertificateForm(forms.ModelForm):
         }
     ))
 
+    picture = forms.ImageField(
+        required=True, help_text="Student Picture", widget=forms.FileInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'file',
+                'accept': 'image/jpeg, image/png'
+            }
+        )
+    
+
+    )
+
     grade = forms.ChoiceField(
         required=True,
         choices= [
@@ -50,6 +62,17 @@ class GenerateCertificateForm(forms.ModelForm):
         ],
         widget=forms.Select(attrs={'class': 'form-control select form-select'})
     )
+
+    level = forms.ChoiceField(
+        required=True,
+        choices= [
+            ('national diploma', 'national diploma'),
+            ('higher national diploma', 'higher national diploma'),
+        ],
+        widget=forms.Select(attrs={'class': 'form-control select form-select'})
+    )
+
+    # picture
 
     class Meta:
         model = Holder

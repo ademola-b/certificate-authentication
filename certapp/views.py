@@ -84,7 +84,7 @@ class GenerateCertificateView(View):
         return render(request, "cert/generate_certificate.html", {'form':form})
     
     def post(self, request):
-        form = GenerateCertificateForm(request.POST)
+        form = GenerateCertificateForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
 
@@ -94,7 +94,7 @@ class GenerateCertificateView(View):
             )
             messages.success(request, "Certificate Successfully Generated")
 
-            qr_image = qrcode.make(certificate.serial_number, box_size=13)
+            qr_image = qrcode.make(certificate.serial_number, box_size=5)
             qr_image_pil = qr_image.get_image()
             stream = BytesIO()
             qr_image_pil.save(stream, format='PNG')
@@ -108,7 +108,10 @@ class GenerateCertificateView(View):
                 'first_name' : certificate.holder.first_name,
                 'last_name' : certificate.holder.last_name,
                 'department': certificate.holder.department.name,
+                'level': certificate.holder.level,
                 'grade': certificate.holder.grade,
+                'picture': certificate.holder.picture,
+                'serial_no': certificate.serial_number,
                 'serial_number': certificate.serial_number,
                 'qr_code': qr_image_base64
             }
