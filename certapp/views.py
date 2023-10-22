@@ -94,7 +94,7 @@ class GenerateCertificateView(View):
             )
             messages.success(request, "Certificate Successfully Generated")
 
-            qr_image = qrcode.make(certificate.serial_number, box_size=15)
+            qr_image = qrcode.make(certificate.serial_number, box_size=13)
             qr_image_pil = qr_image.get_image()
             stream = BytesIO()
             qr_image_pil.save(stream, format='PNG')

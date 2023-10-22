@@ -1,6 +1,8 @@
 {% load static %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
+  {% if request.user.is_authenticated %}
   <ul class="nav">
+    
     <li class="nav-item nav-category">Main</li>
     <li class="nav-item">
       <a class="nav-link" href="{% url 'auth:dashboard' %}">
@@ -62,4 +64,5 @@
       </div>
     </li>
   </ul>
+    {% endif %}
 </nav>

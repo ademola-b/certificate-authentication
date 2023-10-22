@@ -23,6 +23,7 @@ class Holder(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=100, unique=True, null=True, blank=True)
+    picture = models.ImageField(default='auth/assets/images/default.jpg', upload_to='uploads/')
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
     grade = models.CharField(max_length=50)
 
