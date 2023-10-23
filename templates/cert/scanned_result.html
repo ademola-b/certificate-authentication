@@ -103,11 +103,11 @@
                           </div>
                       </div>
                       <br/>
-                      {% if request.user.is_authenticated %}
+                      {% comment %} {% if request.user.is_authenticated %}
                         <div style="float: right;">
                           <a href="" class="btn btn-primary">SAVE</a>
                         </div>
-                      {% endif %}
+                      {% endif %} {% endcomment %}
                         {% else %}
                             <h2 class="text-danger text-center font-weight-bold mb-2"> Record Not Found </h2> 
                         {% endif %}

@@ -102,13 +102,12 @@
                         </div>
                     </div>
                     <br/>
-                    {% if request.user.is_authenticated %}
+                    {% comment %} {% if request.user.is_authenticated %}
                       <div style="float: right;">
                         <button id="generate-pdf">SAVE</button>
 
-                        {% comment %} <a href="" class="btn btn-primary">SAVE</a> {% endcomment %}
                       </div>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                   </div>
                 </div>
         
@@ -127,28 +126,5 @@
 
   {% block script %} {% include 'partials/auth_script.html' %} {% endblock %}
   {% include "partials/modal_logout.html" %}
-
-
-  <script>
-    const generatePdfButton = document.getElementById("generate-pdf");
-
-    generatePdfButton.addEventListener("click", () => {
-        const divToPrint = document.querySelector("#cert"); // Replace "your-div-id" with the actual ID of your <div>
-
-        const pdfOptions = {
-            margin: 10,
-            filename: 'cert.pdf', // Replace with the desired filename
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        };
-
-        html2pdf().from(divToPrint).set(pdfOptions).outputPdf((pdf) => {
-            // You can save or display the PDF as needed
-            pdf.save();
-        });
-    });
-</script>
-
 
 {% endblock %}
