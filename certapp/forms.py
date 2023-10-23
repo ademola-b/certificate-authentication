@@ -46,10 +46,7 @@ class GenerateCertificateForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'file',
                 'accept': 'image/jpeg, image/png'
-            }
-        )
-    
-
+            })
     )
 
     grade = forms.ChoiceField(
@@ -72,7 +69,13 @@ class GenerateCertificateForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control select form-select'})
     )
 
-    # picture
+    issue_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={
+                'class':'form-control',
+                'type': 'date'
+            })
+    )
 
     class Meta:
         model = Holder

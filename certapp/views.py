@@ -10,7 +10,7 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from . forms import LoginForm, GenerateCertificateForm, AuthFillForm
-from . models import Certificate, Department
+from . models import Certificate, Department, Signature
 
 # Create your views here.
 def _serial_no():
@@ -91,6 +91,7 @@ class GenerateCertificateView(View):
             certificate = Certificate.objects.create(
                 serial_number = generate_serial_no(),
                 holder = instance,
+                issue_date = form.cleaned_data['issue_date']
             )
             messages.success(request, "Certificate Successfully Generated")
 
@@ -104,6 +105,7 @@ class GenerateCertificateView(View):
             certificate.qr_code = qr_image_base64
             certificate.save()
 
+            signature = Signature.objects.first()
             certificate_data = {
                 'first_name' : certificate.holder.first_name,
                 'last_name' : certificate.holder.last_name,
@@ -113,7 +115,10 @@ class GenerateCertificateView(View):
                 'picture': certificate.holder.picture,
                 'serial_no': certificate.serial_number,
                 'serial_number': certificate.serial_number,
-                'qr_code': qr_image_base64
+                'date': certificate.issue_date,
+                'qr_code': qr_image_base64,
+                'signature': signature
+
             }
             return render(request, "cert/certificate.html", certificate_data)
         else:
@@ -131,12 +136,12 @@ class AuthenticateCertificateView(View):
             matric_no = request.POST.get('matric_no')
             try:
                 cert = Certificate.objects.get(holder__matric_no = matric_no)
-                return render(request, "cert/cert_with_matric.html", {'cert':cert})
+                signature = Signature.objects.first()
+                return render(request, "cert/cert_with_matric.html", {'cert':cert, 'signature':signature})
             except:
                 messages.warning(request, "NO Certificate with the provided matriculation number")
                 return render(request, "cert/authenticate_certificate.html", {'form':form})
-
-    
+ 
 class ScannerView(TemplateView):
     template_name = 'cert/scanner.html'
 
@@ -144,6 +149,7 @@ class ScannedResultView(View):
     def get(self, request, content):
         try:
             certificate = Certificate.objects.get(serial_number = content)
-            return render(request, "cert/scanned_result.html", {'cert':certificate})
+            signature = Signature.objects.first()
+            return render(request, "cert/scanned_result.html", {'cert':certificate, 'signature':signature})
         except Certificate.DoesNotExist:
             return render(request, "cert/scanned_result.html")

@@ -1,3 +1,4 @@
+import datetime
 import uuid
 from django.db import models
 
@@ -28,7 +29,7 @@ class Holder(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=100, unique=True, null=True, blank=True)
-    picture = models.ImageField(default='auth/assets/images/default.jpg', upload_to='uploads/')
+    picture = models.ImageField(default='auth/assets/images/default.jpg', upload_to='uploads/picture/')
     department = models.ForeignKey(Department, on_delete=models.DO_NOTHING)
     level = models.CharField(max_length=50, choices=level_choices, default='national diploma')
     grade = models.CharField(max_length=50)
@@ -41,6 +42,11 @@ class Certificate(models.Model):
     serial_number = models.CharField(max_length=20, unique=True)
     holder = models.OneToOneField(Holder, on_delete=models.CASCADE)
     qr_code = models.TextField()
+    issue_date = models.DateField(default=datetime.date.today)
     
     def __str__(self):
         return f"{self.holder.first_name} - {self.serial_number}"
+    
+class Signature(models.Model):
+    rector = models.ImageField(upload_to='uploads/signature/')
+    registrar = models.ImageField(upload_to='uploads/signature/')
