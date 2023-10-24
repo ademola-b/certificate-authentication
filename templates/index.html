@@ -8,12 +8,12 @@
 {% block body %}
 
   <!-- navigation -->
-  {% block nav %} {% include 'partials/nav.html' %} {% endblock %}
+  {% comment %} {% block nav %} {% include 'partials/nav.html' %} {% endblock %} {% endcomment %}
 
 <!-- /navigation -->
 
 <!-- hero area -->
-<section class="hero-section hero" data-background="" style="background-image: url({% static 'basic/images/hero-area/banner-bg.png' %});">
+<section class="hero-section hero" data-background="" style="background-image: url({% static 'basic/images/fpb-banner.png' %});">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center zindex-1">
@@ -23,27 +23,16 @@
         <a href="{% url "auth:authenticate_certificate" %}" class="btn btn-primary btn-lg">Verify Certificate</a> &emsp;
         <a href="{% url "auth:login" %}" class="btn btn-secondary btn-lg">Login</a>
         <!-- banner image -->
-        <img class="img-fluid w-100 banner-image" src="{% static 'basic/images/hero-area/banner-img.png' %}" alt="banner-img">
       </div>
     </div>
   </div>
   <!-- background shapes -->
-  <div id="scene">
-    <img class="img-fluid hero-bg-1 up-down-animation" src="{% static 'basic/images/background-shape/feature-bg-2.png' %}" alt="">
-    <img class="img-fluid hero-bg-2 left-right-animation" src="{% static 'basic/images/background-shape/seo-ball-1.png' %}" alt="">
-    <img class="img-fluid hero-bg-3 left-right-animation" src="{% static 'basic/images/background-shape/seo-half-cycle.png' %}" alt="">
-    <img class="img-fluid hero-bg-4 up-down-animation" src="{% static 'basic/images/background-shape/green-dot.png' %}" alt="">
-    <img class="img-fluid hero-bg-5 left-right-animation" src="{% static 'basic/images/background-shape/blue-half-cycle.png' %}" alt="">
-    <img class="img-fluid hero-bg-6 up-down-animation" src="{% static 'basic/images/background-shape/seo-ball-1.png' %}" alt="">
-    <img class="img-fluid hero-bg-7 left-right-animation" src="{% static 'basic/images/background-shape/yellow-triangle.png' %}" alt="">
-    <img class="img-fluid hero-bg-8 up-down-animation" src="{% static 'basic/images/background-shape/service-half-cycle.png' %}" alt="">
-    <img class="img-fluid hero-bg-9 up-down-animation" src="{% static 'basic/images/background-shape/team-bg-triangle.png' %}" alt="">
-  </div>
+
 </section>
 <!-- /hero-area -->
 
 <!-- feature -->
-<section class="section feature mb-0" id="feature">
+{% comment %} <section class="section feature mb-0" id="feature">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
@@ -77,12 +66,11 @@
 
     </div>
   </div>
-  <img class="feature-bg-1 up-down-animation" src="{% static 'basic/images/background-shape/feature-bg-1.png' %}" alt="bg-shape">
-  <img class="feature-bg-2 left-right-animation" src="{% static 'basic/images/background-shape/feature-bg-2.png' %}" alt="bg-shape">
-</section>
+  
+</section> {% endcomment %}
 <!-- /feature -->
 
-{% block footer %} {% include 'partials/footer.html' %} {% endblock %}
+{% comment %} {% block footer %} {% include 'partials/footer.html' %} {% endblock %} {% endcomment %}
 
 {% block script %} {% include 'partials/script.html' %} {% endblock %}
 
