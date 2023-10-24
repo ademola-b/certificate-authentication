@@ -160,6 +160,20 @@ class ScannedResultView(View):
                 certificate = Certificate.objects.get(serial_number = content)
                 certificate = Certificate.objects.get(serial_number = content)
                 signature = Signature.objects.first()
-                return render(request, "cert/scanned_result.html", {'cert':certificate, 'signature':signature})
+                # return render(request, "cert/scanned_result.html", {'cert':certificate, 'signature':signature})
+                return render(request, "cert/scanned_result.html")
         except Certificate.DoesNotExist:
             return render(request, "cert/scanned_result.html")
+        
+    def post(self, request, content):
+        if 'verify-btn' in request.POST:
+            matric_no = request.POST.get('matric_no')
+            try:
+                cert = Certificate.objects.get(serial_number = content, holder__matric_no = matric_no)
+                print(f"cert:{cert}")
+                signature = Signature.objects.first()
+                return render(request, "cert/scanned_result.html", {'cert':cert, 'signature':signature})
+            except:
+                return render(request, "cert/scanned_result.html")
+
+
