@@ -92,7 +92,7 @@
 					scanner.addListener('scan',function(content){
 						alert(content);
                         
-						window.location.href= 'scanned-result/' + content;
+						window.location.href= content;
 					});
 					Instascan.Camera.getCameras().then(function (cameras){
 						if(cameras.length>0){

@@ -3,6 +3,7 @@ from io import BytesIO
 import base64
 from random import choice, shuffle
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -94,8 +95,9 @@ class GenerateCertificateView(View):
                 issue_date = form.cleaned_data['issue_date']
             )
             messages.success(request, "Certificate Successfully Generated")
-
-            qr_image = qrcode.make(certificate.serial_number, box_size=5)
+            
+            qr_image = qrcode.make(f'{settings.REDIRECT_DOMAIN}authenticate-certificate/scanned-result/{certificate.serial_number}/', box_size=2)
+            # qr_image = qrcode.make(certificate.serial_number, box_size=5)
             qr_image_pil = qr_image.get_image()
             stream = BytesIO()
             qr_image_pil.save(stream, format='PNG')
@@ -147,9 +149,17 @@ class ScannerView(TemplateView):
 
 class ScannedResultView(View):
     def get(self, request, content):
+        serial_number = self.kwargs.get('serial')
+
         try:
-            certificate = Certificate.objects.get(serial_number = content)
-            signature = Signature.objects.first()
-            return render(request, "cert/scanned_result.html", {'cert':certificate, 'signature':signature})
+            if serial_number is not None:
+                certificate = Certificate.objects.get(serial_number = serial_number)
+                signature = Signature.objects.first()
+                return render(request, "cert/scanned_result.html", {'cert':certificate, 'signature':signature})
+            else:
+                certificate = Certificate.objects.get(serial_number = content)
+                certificate = Certificate.objects.get(serial_number = content)
+                signature = Signature.objects.first()
+                return render(request, "cert/scanned_result.html", {'cert':certificate, 'signature':signature})
         except Certificate.DoesNotExist:
             return render(request, "cert/scanned_result.html")
