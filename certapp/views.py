@@ -112,6 +112,7 @@ class GenerateCertificateView(View):
                 'first_name' : certificate.holder.first_name,
                 'last_name' : certificate.holder.last_name,
                 'department': certificate.holder.department.name,
+                'matric_no': certificate.holder.matric_no,
                 'level': certificate.holder.level,
                 'grade': certificate.holder.grade,
                 'picture': certificate.holder.picture,

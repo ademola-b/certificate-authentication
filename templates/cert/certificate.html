@@ -38,6 +38,8 @@
                             <div class="row">
                               <div class="col-md-4">
                                 <img src="{{ picture.url }}" alt="picture" width="100" height="100">
+                                <h5 class="text-dark text-center font-weight-bold"> Mat. No </h5> 
+                                <h5 class="text-dark text-center font-weight-bold"> {{matric_no}} </h5>
                               </div>
                               <div class="col-md-4">
                                 <img src="{% static "auth/assets/images/bida-logo.jpg" %}" alt="bida-logo" height="150">
@@ -57,8 +59,9 @@
                               <br/>
                               <h1 class="text-primary text-center font-weight-bold mb-2" > {{level | title }} </h1> 
                               <br>
+                              <p class="text-dark text-center"><i>to</i></p>
                               
-                              <h2 class="text-primary text-center font-weight-bold mb-2"><i>to</i> {{ first_name | title }} {{ last_name | title }}</h2> 
+                              <h2 class="text-primary text-center font-weight-bold mb-2"> {{ first_name | title }} {{ last_name | title }}</h2> 
                               
                               <br>
                               <h5 class="text-dark text-center font-weight-bold mb-2"><i>
