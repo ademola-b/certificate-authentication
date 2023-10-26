@@ -102,12 +102,11 @@
                         </div>
                     </div>
                     <br/>
-                    {% comment %} {% if request.user.is_authenticated %}
+                    {% if request.user.is_authenticated %}
                       <div style="float: right;">
-                        <button id="generate-pdf">SAVE</button>
-
+                        <button class="btn btn-primary" id="print" onclick="print()">PRINT</button>
                       </div>
-                    {% endif %} {% endcomment %}
+                    {% endif %}
                   </div>
                 </div>
         
@@ -123,6 +122,13 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+
+  <script>
+    function print(){
+      //console.log('print');
+      $('#cert').printThis();
+    }
+  </script>
 
   {% block script %} {% include 'partials/auth_script.html' %} {% endblock %}
   {% include "partials/modal_logout.html" %}

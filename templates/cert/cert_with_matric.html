@@ -39,6 +39,8 @@
                                 <div class="row">
                                   <div class="col-md-4">
                                     <img src="{{ cert.holder.picture.url }}" alt="picture" width="100" height="100">
+                                    <h5 class="text-dark text-center font-weight-bold"> Mat. No </h5> 
+                                    <h5 class="text-dark text-center font-weight-bold"> {{cert.holder.matric_no}} </h5> 
                                   </div>
                                   <div class="col-md-4">
                                     <img src="{% static "auth/assets/images/bida-logo.jpg" %}" alt="bida-logo" height="150">
@@ -58,8 +60,9 @@
                                   <br/>
                                   <h1 class="text-primary text-center font-weight-bold mb-2"> {{cert.holder.level | title }} </h1> 
                                   <br>
+                                  <p class="text-dark text-center"><i>to</i></p>
                                   
-                                  <h2 class="text-primary text-center font-weight-bold mb-2"><i>to</i> {{ cert.holder.first_name | title }} {{ cert.holder.last_name | title }}</h2> 
+                                  <h2 class="text-primary text-center font-weight-bold mb-2">{{ cert.holder.first_name | title }} {{ cert.holder.last_name | title }}</h2> 
                                   
                                   <br>
                                   <h5 class="text-dark text-center font-weight-bold mb-2"><i>
@@ -103,12 +106,12 @@
                             </div>
                         </div>
                         <br/>
-                        {% comment %} {% if request.user.is_authenticated %}
+                        {% if request.user.is_authenticated %}
                           <div style="float: right;">
-                            <button id="generate-pdf" onclick="saveDiv('cert', 'Title')">SAVE</button>
-
+                            <button class="btn btn-primary" id="print" onclick="print()">PRINT</button>
+                            {% comment %} <a href="#" class="btn btn-primary" onclick="printDetail()">PRINT</a> {% endcomment %}
                           </div>
-                        {% endif %} {% endcomment %}
+                        {% endif %}
 
                       </div>
                 </div>
@@ -125,6 +128,28 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+
+  {% comment %} <script>
+    function printDetail() {
+        var card = document.querySelector('.card-body');
+        var printWindow = window.open('', '', 'width=400,height=400');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title></head><body>');
+        printWindow.document.write('<style>@media print { .btn { display: none; } }</style>');
+        printWindow.document.write(card.outerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        //printWindow.close();
+    }
+</script> {% endcomment %}
+
+<script>
+  function print(){
+    //console.log('print');
+    $('#cert').printThis();
+  }
+</script>
 
   {% block script %} {% include 'partials/auth_script.html' %} {% endblock %}
   {% include "partials/modal_logout.html" %}
